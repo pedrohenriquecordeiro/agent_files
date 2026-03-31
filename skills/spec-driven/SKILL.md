@@ -1,6 +1,6 @@
 ---
-name: tlc-spec-driven
-description: Project and feature planning with 4 adaptive phases - Specify, Design, Tasks, Execute. Auto-sizes depth by complexity. Creates atomic tasks with verification criteria, atomic git commits, requirement traceability, and persistent memory across sessions. Stack-agnostic. Use when (1) Starting new projects (initialize vision, goals, roadmap), (2) Working with existing codebases (map stack, architecture, conventions), (3) Planning features (requirements, design, task breakdown), (4) Implementing with verification and atomic commits, (5) Quick ad-hoc tasks (bug fixes, config changes), (6) Tracking decisions/blockers/deferred ideas across sessions, (7) Pausing/resuming work. Triggers on "initialize project", "map codebase", "specify feature", "discuss feature", "design", "tasks", "implement", "validate", "verify work", "UAT", "quick fix", "quick task", "pause work", "resume work". Do NOT use for architecture decomposition analysis (use architecture skills) or technical design docs (use create-technical-design-doc).
+name: spec-driven
+description: Project and feature planning with 4 adaptive phases - Specify, Design, Tasks, Execute.
 disable-model-invocation: true
 license: CC-BY-4.0
 metadata:
@@ -130,6 +130,7 @@ Plan and implement projects with precision. Granular tasks. Clear dependencies. 
 | Trigger Pattern | Reference |
 |----------------|-----------|
 | Specify feature, define requirements | [specify.md](references/specify.md) |
+| Interview me, ask me about the project, interview mode | [interview.md](references/interview.md) |
 | Discuss feature, capture context, how should this work | [discuss.md](references/discuss.md) |
 | Design feature, architecture | [design.md](references/design.md) |
 | Break into tasks, create tasks | [tasks.md](references/tasks.md) |

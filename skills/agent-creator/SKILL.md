@@ -8,7 +8,7 @@ description: >
   Also trigger when users say "create an agent", "make me an agent for", "I need a subagent that",
   "set up an agent", "build an agent", or reference the /agents command for creation purposes.
   Do NOT trigger for general questions about how agents work (use claude-code-guide for that).
-disable-model-invocation: true
+disable-model-invocation: false
 ---
 
 # Agent Creator
