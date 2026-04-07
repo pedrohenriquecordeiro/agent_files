@@ -1,12 +1,18 @@
 # Interview: Project Understanding
 
-**Goal:** Reach mutual understanding about the project through structured, dependency-aware questioning. Each question set resolves one layer of decisions before moving to the next.
+**Goal:** Reach 99% mutual understanding about the project through structured, dependency-aware questioning. Each question set resolves one layer of decisions before moving to the next. The agent and user MUST be on the same page before any spec work begins.
 
-**Trigger:** Explicitly via "interview me", "ask me about the project", "interview mode", or when the agent detects high ambiguity across multiple axes simultaneously (unclear goal + unclear scope + unclear user + unclear constraints).
+> **The agent is PROACTIVELY RESPONSIBLE for reaching shared understanding.**
+> Do not wait for the user to provide information — ask for it.
+> Do not assume you understand — verify that you do.
+> Do not proceed with doubt — resolve it first.
+> The interview exists because building the wrong thing is infinitely more expensive than asking one more question.
+
+**Trigger:** Explicitly via "interview me", "ask me about the project", "interview mode", or **proactively by the agent** when it detects high ambiguity across multiple axes simultaneously (unclear goal + unclear scope + unclear user + unclear constraints). The agent SHOULD proactively suggest entering interview mode when it senses that the user's request contains too many unknowns to proceed confidently.
 
 **When to use:** Starting a new project with no existing spec, or when the user's description is too broad to write a spec without guessing foundational decisions first.
 
-**When NOT to use:** If the user has already provided clear context — go straight to [specify.md](specify.md). Don't interview when you can just ask one follow-up question.
+**When NOT to use:** If the user has already provided clear context — go straight to [specify.md](specify.md). Don't interview when you can just ask one follow-up question. However, even when skipping the full interview, the agent MUST still run the clarifying questions step in specify.md — there are no exceptions.
 
 ---
 
@@ -89,12 +95,25 @@ After the user responds:
 
 ### 5. Decide: Continue or Write Spec
 
-After each round, assess whether enough is resolved to write the spec:
+After each round, the agent MUST perform a confidence self-assessment:
 
-- **Write spec now:** Goal, user, scope, and success criteria are clear. Proceed to [specify.md](specify.md).
+```
+┌─────────────────────────────────────────────────────┐
+│  INTERVIEW CONFIDENCE GATE                          │
+│                                                     │
+│  "Am I 99% certain that I understand what the       │
+│   user wants to build, why, for whom, and what      │
+│   success looks like to them?"                      │
+│                                                     │
+│  YES → Summarize understanding, proceed to spec     │
+│  NO  → Identify what's missing, ask another round   │
+└─────────────────────────────────────────────────────┘
+```
+
+- **Write spec now:** Goal, user, scope, and success criteria are clear. The agent is 99% confident in shared understanding. Proceed to [specify.md](specify.md).
 - **Another round:** Critical unknowns remain that would force guessing in the spec. Present a focused follow-up round (only the unresolved questions, minimum 3).
 
-Never do more than **3 rounds** without writing something. If ambiguity persists after 3 rounds, flag it explicitly and write the spec with open questions marked.
+Never do more than **3 rounds** without writing something. If ambiguity persists after 3 rounds, write the spec anyway — but explicitly mark every unresolved assumption with a `⚠️ UNRESOLVED:` label so the user can correct it before the spec is used downstream. This is not skipping the alignment gate; it is proceeding with flagged uncertainty rather than fabricating answers.
 
 ### 6. Transition to Spec
 

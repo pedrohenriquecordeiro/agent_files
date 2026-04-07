@@ -6,30 +6,86 @@ If the feature has ambiguous gray areas (multiple valid approaches for user-faci
 
 ## Process
 
-### 1. Clarify Requirements
+### 1. Clarifying Questions — The Alignment Gate
 
-You are a thinking partner, not an interviewer. Start open — let the user dump their mental model. Follow the energy: whatever they emphasize, dig into that.
+> **This step is MANDATORY and the agent is PROACTIVELY RESPONSIBLE for it.**
+> The agent must ensure 99% shared understanding with the user before writing any spec.
+> This is not a formality — it is the most critical step of the entire specification process.
 
-Ask conversationally (not as a checklist):
+The agent MUST ask structured questions to eliminate ambiguity. The goal is not to check a box — the goal is to reach a state where the agent can confidently say: *"I understand exactly what the user wants, and I would bet on it."*
 
-- "What problem are you solving?"
-- "Who is the user and what's their pain?"
-- "What does success look like?"
+**Focus areas:**
 
-If needed:
+- **Problem/Goal:** What problem does this solve? Why does it need solving now?
+- **Core Functionality:** What are the key actions? What does success look like in the user's head?
+- **Scope/Boundaries:** What should it NOT do? Where does this feature end?
+- **Success Criteria:** How do we know it's done? What would make the user say "yes, this is exactly what I wanted"?
+- **Hidden Assumptions:** What is the agent assuming that the user hasn't explicitly stated?
 
-- "What are the constraints (time, tech, resources)?"
-- "What is explicitly out of scope?"
+**How many to ask:** If the prompt is vague, ask at least 5 questions (max 25). If the user has already provided clear context, you may need fewer — but NEVER zero. Even with clear context, the agent MUST ask at least 2-3 confirmation questions to verify its understanding. Calibrate to the actual ambiguity — never ask for information already given, but always verify critical assumptions.
 
-**Challenge vagueness.** Never accept fuzzy answers. "Good" means what? "Users" means who? "Simple" means how? Make the abstract concrete: "Walk me through using this." "What does that actually look like?"
+**Format every question with lettered options:**
 
-**Know when to stop.** When you understand what they're building, why, who it's for, and what done looks like — offer to proceed.
+```
+1. What is the primary goal of this feature?
+   A. [Option]
+   B. [Option]
+   C. Other: [please specify]
+
+2. Who is the target user?
+   A. [Role/persona]
+   B. [Role/persona]
+   C. All users
+   D. Other: [please specify]
+
+3. What is the scope?
+   A. Minimal viable version
+   B. Full-featured implementation
+   C. Just the backend/API
+   D. Just the UI
+   E. Other: [please specify]
+```
+
+**Wait for answers before proceeding.** Do not draft spec.md until the user has responded to the clarifying questions. This is a hard gate — no exceptions.
+
+**Challenge vagueness in answers — aggressively.** The agent MUST NOT accept vague answers as resolved. Specific patterns to challenge:
+
+| Vague answer | Agent's follow-up |
+|---|---|
+| "It should be simple" | "Simple for whom? What's the simplest version you'd accept?" |
+| "For users" | "Which users specifically? Admins? End consumers? Internal team?" |
+| "It should be fast" | "Fast compared to what? What response time would you consider acceptable?" |
+| "Standard approach" | "Standard in what context? Can you point to an example you consider standard?" |
+| "Just make it work" | "What does 'working' look like? What's the minimum behavior you'd demo?" |
+| "You decide" | "I can decide, but let me confirm my assumptions: [state them]. Correct?" |
+
+**Confidence self-check before proceeding:**
+
+After receiving answers, the agent MUST internally assess:
+
+```
+┌─────────────────────────────────────────────────────┐
+│  CONFIDENCE CHECK                                   │
+│                                                     │
+│  □ I know WHAT the user wants to build              │
+│  □ I know WHY they want it                          │
+│  □ I know WHO it's for                              │
+│  □ I know what's IN scope and OUT of scope          │
+│  □ I know what SUCCESS looks like to the user       │
+│  □ I have zero assumptions I haven't verified       │
+│                                                     │
+│  All checked? → Proceed to write spec               │
+│  Any unchecked? → Ask more questions                │
+└─────────────────────────────────────────────────────┘
+```
+
+**If confidence is below 99%, the agent MUST ask another round of questions.** There is no shortcut. There is no "good enough". The spec must reflect what the user actually wants, not what the agent thinks they want.
 
 ### 2. Capture User Stories with Priorities
 
 **P1 = MVP** (must ship), **P2** (should have), **P3** (nice to have)
 
-Each story MUST be **independently testable** - you can implement and demo just that story.
+Each story MUST be **independently specifiable** — it can be specified, reviewed, and later implemented in isolation.
 
 ### 3. Write Acceptance Criteria
 
@@ -37,9 +93,13 @@ Use **WHEN/THEN/SHALL** format - it's precise and testable:
 
 - WHEN [event/action] THEN [system] SHALL [response/behavior]
 
+### 4. Confirm with User
+
+User must approve spec (and context.md if discuss was triggered) before proceeding to Design. Do not move forward without explicit confirmation.
+
 ---
 
-## Template: `.specs/[feature]/spec.md`
+## Template: `.specs/features/[feature]/spec.md`
 
 ```markdown
 # [Feature Name] Specification
@@ -129,7 +189,7 @@ Each requirement gets a unique ID for tracking across design, tasks, and validat
 
 **ID format:** `[CATEGORY]-[NUMBER]` (e.g., `AUTH-01`, `CART-03`, `NOTIF-02`)
 
-**Status values:** Pending → In Design → In Tasks → Implementing → Verified
+**Status values:** Pending → In Design → In Tasks → Ready
 
 **Coverage:** X total, Y mapped to tasks, Z unmapped ⚠️
 
@@ -147,9 +207,9 @@ How we know the feature is successful:
 
 ## Tips
 
+- **The agent owns the questions** — Don't wait for the user to anticipate gaps. Proactively identify what's unclear and ask.
 - **P1 = Vertical Slice** — A complete, demo-able feature, not just backend or frontend
 - **WHEN/THEN is code** — If you can't write it as a test, rewrite it
 - **Requirement IDs are mandatory** — Every story maps to trackable IDs
 - **Edge cases matter** — What breaks? What's empty? What's huge?
 - **Out of Scope prevents creep** — If it's not here, it doesn't get built
-- **Confirm before Discuss** — User must approve spec before moving to discuss phase

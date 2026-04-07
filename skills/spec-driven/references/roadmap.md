@@ -62,15 +62,15 @@ Based on PROJECT.md, decompose vision into:
 **Status values:**
 
 - PLANNED: Not started
-- IN PROGRESS: Currently implementing
-- COMPLETE: Shipped and verified
+- IN PROGRESS: Spec in progress
+- COMPLETE: Spec approved and ready for implementation
 
 **Size limit:** 3,000 tokens (~1,800 words)
 
 **Update strategy:**
 
-- Mark features PLANNED → IN PROGRESS when starting
-- Mark IN PROGRESS → COMPLETE when verified
+- Mark features PLANNED → IN PROGRESS when spec work begins
+- Mark IN PROGRESS → COMPLETE when spec is approved
 - Add new milestones as project evolves
 
 **Validation:**

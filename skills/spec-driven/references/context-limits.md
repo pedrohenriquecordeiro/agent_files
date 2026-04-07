@@ -8,14 +8,18 @@
 | ROADMAP.md      | 3,000      | 1,800  | 2,400       |
 | STATE.md        | 10,000     | 6,000  | 7,000 (70%) |
 | spec.md         | 5,000      | 3,000  | 4,000       |
+| context.md      | 3,000      | 1,800  | 2,400       |
 | design.md       | 8,000      | 4,800  | 6,400       |
 | tasks.md        | 10,000     | 6,000  | 8,000       |
+| TASK.md (quick) | 1,000      | 600    | 800         |
+| HANDOFF.md      | 500        | 300    | 400         |
 | STACK.md        | 2,000      | 1,200  | 1,600       |
 | ARCHITECTURE.md | 4,000      | 2,400  | 3,200       |
 | CONVENTIONS.md  | 3,000      | 1,800  | 2,400       |
 | STRUCTURE.md    | 2,000      | 1,200  | 1,600       |
 | TESTING.md      | 4,000      | 2,400  | 3,200       |
 | INTEGRATIONS.md | 5,000      | 3,000  | 4,000       |
+| CONCERNS.md     | 5,000      | 3,000  | 4,000       |
 
 ## Context Zones
 
@@ -36,5 +40,5 @@ Display context status in footer when >40k:
 
 ## Principles
 
-**Target:** <40k tokens loaded (20% of window)
-**Reserve:** 160k+ tokens for work, reasoning, outputs
+**Target:** <40k tokens loaded at any time
+**Reserve:** Remaining context for work, reasoning, outputs

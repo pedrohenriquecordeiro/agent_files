@@ -53,9 +53,9 @@
 
 ## Quick Tasks Completed
 
-| #   | Description              | Date   | Commit | Status  |
-| --- | ------------------------ | ------ | ------ | ------- |
-| 001 | [Quick task description] | [date] | [hash] | ✅ Done |
+| #   | Description              | Date   | Status        |
+| --- | ------------------------ | ------ | ------------- |
+| 001 | [Quick task description] | [date] | Ready to impl |
 
 ---
 
@@ -83,7 +83,7 @@ Capture in-progress thoughts and action items that don't fit in active tasks.
 | Significant architectural choice | Add AD-[NNN]                           |
 | Implementation blocked           | Add B-[NNN]                            |
 | Important discovery/learning     | Add L-[NNN]                            |
-| Quick task completed             | Add row to Quick Tasks table           |
+| Quick task spec created          | Add row to Quick Tasks table           |
 | Scope creep captured             | Add to Deferred Ideas                  |
 | In-progress thought              | Add to Todos                           |
 | Session end                      | Update "Last Updated" + "Current Work" |

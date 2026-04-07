@@ -41,7 +41,7 @@
 ## Context
 
 - Branch: [git branch if applicable]
-- Uncommitted: [files with changes]
+- Uncommitted spec files: [.specs/ files not yet saved/finalized]
 - Related decisions: [STATE.md references if applicable]
 ```
 

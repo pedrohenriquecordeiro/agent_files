@@ -2,54 +2,52 @@
 
 **Goal**: Define HOW to build it. Architecture, components, what to reuse.
 
-**Skip this phase when:** The change is straightforward — no architectural decisions, no new patterns, no component interactions to plan. For simple features, design happens inline during Execute.
+**Skip this phase when:** The change is straightforward — no architectural decisions, no new patterns, no component interactions to plan. For simple features, design notes go inline in spec.md.
 
 ## Process
 
 ### 1. Load Context
 
-Read `.specs/features/[feature]/spec.md` before designing. If `.specs/features/[feature]/context.md` exists, load it too — it contains implementation decisions that constrain the design (layout choices, behavior preferences, interaction patterns). Decisions marked as "Agent's Discretion" are yours to decide.
+Read `.specs/features/[feature]/spec.md` before designing. If `.specs/features/[feature]/context.md` exists, load it too — it contains specification decisions that constrain the design (layout choices, behavior preferences, interaction patterns). Decisions marked as "Agent's Discretion" are yours to decide.
 
-### 1.5. Research (Optional but Recommended)
+### 2. Research (Optional but Recommended)
 
 If the feature involves unfamiliar technology, patterns, or integrations, research before designing. Document findings briefly in the design doc or as inline notes. This prevents incorrect assumptions from propagating into tasks.
 
-Follow the **Knowledge Verification Chain** (see SKILL.md) in strict order:
-
-```
-Codebase → Project docs → Context7 MCP → Web search → Flag as uncertain
-```
-
-**CRITICAL: NEVER assume or fabricate information.** If you cannot find an answer through the chain, explicitly say "I don't know" or "I couldn't find documentation for this". Inventing an API, a pattern, or a behavior that doesn't exist is far worse than admitting uncertainty. Wrong assumptions propagate through design → tasks → implementation and cause cascading failures.
+Follow the **Knowledge Verification Chain** defined in SKILL.md — never skip it, never fabricate.
 
 Good triggers for research: new libraries, unfamiliar APIs, performance-sensitive features, security-sensitive features, patterns you haven't used in this codebase before.
 
-### 2. Define Architecture
+### 3. Define Architecture
 
 Overview of how components interact. Use mermaid diagrams when helpful. Before creating any diagrams, check if the `mermaid-studio` skill is available (see Skill Integrations in SKILL.md).
 
-### 3. Identify Code Reuse
+### 4. Identify Code Reuse
 
 **CRITICAL**: What existing code can we leverage? This saves tokens and reduces errors.
 
 If `.specs/codebase/CONCERNS.md` exists, check it before designing. Any component flagged as fragile, carrying tech debt, or having test coverage gaps requires extra care in the design — document how the design mitigates those concerns.
 
-### 4. Define Components and Interfaces
+### 5. Define Components and Interfaces
 
 Each component: Purpose, Location, Interfaces, Dependencies, What it reuses.
 
-### 5. Define Data Models
+### 6. Define Data Models
 
 If the feature involves data, define models before implementation.
 
+### 7. Confirm with User
+
+User must approve design before proceeding to Tasks. Do not move forward without explicit confirmation.
+
 ---
 
-## Template: `.specs/[feature]/design.md`
+## Template: `.specs/features/[feature]/design.md`
 
 ````markdown
 # [Feature] Design
 
-**Spec**: `.specs/[feature]/spec.md`
+**Spec**: `.specs/features/[feature]/spec.md`
 **Status**: Draft | Approved
 
 ---
@@ -156,11 +154,7 @@ interface AnotherModel {
 
 ## Tips
 
-- **Load context first** — If context.md exists, decisions there are locked
-- **Research when uncertain** — 5 minutes of research prevents hours of rework
 - **Reuse is king** — Every component should reference existing patterns
 - **Interfaces first** — Define contracts before implementation
 - **Keep it visual** — Diagrams save 1000 words (check mermaid-studio skill in Skill Integrations)
 - **Small components** — If component does 3+ things, split it
-- **Check CONCERNS.md** — If it exists, flag fragile areas the design must address
-- **Confirm before Tasks** — User approves design before breaking into tasks

@@ -1,57 +1,54 @@
 ---
 name: spec-driven
-description: Project and feature planning with 4 adaptive phases - Specify, Design, Tasks, Execute.
-disable-model-invocation: true
-license: CC-BY-4.0
-metadata:
-  author: Felipe Rodrigues - github.com/felipfr
-  version: 2.0.0
+description: Project and feature planning with 3 phases - Specify, Design, Tasks.
+disable-model-invocation: false
 ---
 
 # Tech Lead's Club - Spec-Driven Development
 
-Plan and implement projects with precision. Granular tasks. Clear dependencies. Right tools. Zero ceremony.
+Plan projects with precision. Granular tasks. Clear dependencies. Right tools. Zero ceremony. **Specification only — never executes code.**
 
 ```
-┌──────────┐   ┌──────────┐   ┌─────────┐   ┌─────────┐
-│ SPECIFY  │ → │  DESIGN  │ → │  TASKS  │ → │ EXECUTE │
-└──────────┘   └──────────┘   └─────────┘   └─────────┘
-   required      optional*      optional*     required
-
-* Agent auto-skips when scope doesn't need it
+┌──────────┐   ┌──────────┐   ┌─────────┐
+│ SPECIFY  │ → │  DESIGN  │ → │  TASKS  │
+└──────────┘   └──────────┘   └─────────┘
+   always        adaptive      adaptive
 ```
 
-## Auto-Sizing: The Core Principle
+> **THIS SKILL NEVER EXECUTES CODE.** It only produces specification files.
+> Implementation is always done separately, outside this skill.
+
+## Shared Understanding: The Non-Negotiable Foundation
+
+**The agent MUST proactively ensure 99% alignment with the user before writing any specification.** Every misunderstanding at spec level cascades into wrong design, wrong tasks, and wrong implementation. The cost of asking one more question is near-zero; the cost of building the wrong thing is catastrophic.
+
+The agent is responsible for achieving this alignment — not the user. Do not wait for the user to volunteer information. Do not assume. Do not guess. Challenge vague answers ("simple", "fast", "users") until they are concrete. Silence is not agreement. See [specify.md](references/specify.md) for the confidence gate and question process.
+
+## Auto-Sizing: Depth Scales With Complexity
 
 **The complexity determines the depth, not a fixed pipeline.** Before starting any feature, assess its scope and apply only what's needed:
 
-| Scope       | What                     | Specify                                                 | Design                                          | Tasks                         | Execute                                               |
-| ----------- | ------------------------ | ------------------------------------------------------- | ----------------------------------------------- | ----------------------------- | ----------------------------------------------------- |
-| **Small**   | ≤3 files, one sentence   | **Quick mode** — skip pipeline entirely                 | -                                               | -                             | -                                                     |
-| **Medium**  | Clear feature, <10 tasks | Spec (brief)                                            | Skip — design inline                            | Skip — tasks implicit         | Implement + verify                                    |
-| **Large**   | Multi-component feature  | Full spec + requirement IDs                             | Architecture + components                       | Full breakdown + dependencies | Implement + verify per task                           |
-| **Complex** | Ambiguity, new domain    | Full spec + [discuss gray areas](references/discuss.md) | [Research](references/design.md) + architecture | Breakdown + parallel plan     | Implement + [interactive UAT](references/validate.md) |
+| Scope       | What                     | Specify                                                 | Design                                          | Tasks                                          |
+| ----------- | ------------------------ | ------------------------------------------------------- | ----------------------------------------------- | ---------------------------------------------- |
+| **Quick**   | Bug fix, config, ≤3 files | Clarify + [TASK.md](references/quick-mode.md)          | Skip                                            | Skip (inline in TASK.md)                       |
+| **General** | Multi-component feature  | Full spec + requirement IDs                             | Architecture + components                       | Full breakdown + dependencies                  |
+| **Complex** | Ambiguity, new domain    | Full spec + [discuss gray areas](references/discuss.md) | [Research](references/design.md) + architecture | Breakdown + parallel plan                      |
 
 **Rules:**
 
-- **Specify and Execute are always required** — you always need to know WHAT and DO it
-- **Design is skipped** when the change is straightforward (no architectural decisions, no new patterns)
-- **Tasks is skipped** when there are ≤3 obvious steps (they become implicit in Execute)
-- **Discuss is triggered within Specify** only when the agent detects ambiguous gray areas that need user input
-- **Interactive UAT is triggered within Execute** only for user-facing features with complex behavior
-- **Quick mode** is the express lane — for bug fixes, config changes, and small tweaks
-
-**Safety valve:** Even when Tasks is skipped, Execute ALWAYS starts by listing atomic steps inline (see [implement.md](references/implement.md)). If that listing reveals >5 steps or complex dependencies, STOP and create a formal `tasks.md` — the Tasks phase was wrongly skipped.
+- **NEVER write spec.md before the user answers clarifying questions** — no exceptions, no shortcuts
+- **NEVER implement, run, commit, or execute anything** — output is always specification files
 
 ## Project Structure
 
 ```
 .specs/
 ├── project/
-│   ├── PROJECT.md      # Vision & goals
-│   ├── ROADMAP.md      # Features & milestones
-│   └── STATE.md        # Memory: decisions, blockers, lessons, todos, deferred ideas
-├── codebase/           # Brownfield analysis (existing projects)
+│   ├── PROJECT.md        # Vision & goals
+│   ├── ROADMAP.md        # Features & milestones
+│   ├── STATE.md          # Memory: decisions, blockers, lessons, todos, deferred ideas
+│   └── STATE-ARCHIVE.md  # Archived decisions >60 days old
+├── codebase/             # Brownfield analysis (existing projects)
 │   ├── STACK.md
 │   ├── ARCHITECTURE.md
 │   ├── CONVENTIONS.md
@@ -59,16 +56,16 @@ Plan and implement projects with precision. Granular tasks. Clear dependencies. 
 │   ├── TESTING.md
 │   ├── INTEGRATIONS.md
 │   └── CONCERNS.md
-├── features/           # Feature specifications
+├── features/             # Feature specifications
 │   └── [feature]/
-│       ├── spec.md     # Requirements with traceable IDs
-│       ├── context.md  # User decisions for gray areas (only when discuss is triggered)
-│       ├── design.md   # Architecture & components (only for Large/Complex)
-│       └── tasks.md    # Atomic tasks with verification (only for Large/Complex)
-└── quick/              # Ad-hoc tasks (quick mode)
-    └── NNN-slug/
-        ├── TASK.md
-        └── SUMMARY.md
+│       ├── spec.md       # Requirements with traceable IDs
+│       ├── context.md    # User decisions for gray areas (only when discuss is triggered)
+│       ├── design.md     # Architecture & components (only for General/Complex)
+│       └── tasks.md      # Atomic tasks with verification (only for General/Complex)
+├── quick/                # Quick tasks (bug fixes, config changes, ≤3 files)
+│   └── NNN-slug/
+│       └── TASK.md       # Description + verification criteria
+└── HANDOFF.md            # Session checkpoint for resumption
 ```
 
 ## Workflow
@@ -76,15 +73,13 @@ Plan and implement projects with precision. Granular tasks. Clear dependencies. 
 **New project:**
 
 1. Initialize project → PROJECT.md + ROADMAP.md
-2. For each feature → Specify → (Design) → (Tasks) → Execute (depth auto-sized)
+2. For each feature → Specify → (Design) → (Tasks) — depth auto-sized
 
 **Existing codebase:**
 
 1. Map codebase → 7 brownfield docs
 2. Initialize project → PROJECT.md + ROADMAP.md
 3. For each feature → same adaptive workflow
-
-**Quick mode:** Describe → Implement → Verify → Commit (for ≤3 files, one-sentence scope)
 
 ## Context Loading Strategy
 
@@ -99,9 +94,9 @@ Plan and implement projects with precision. Granular tasks. Clear dependencies. 
 - Codebase docs (when working in existing project)
 - CONCERNS.md (when planning features that touch flagged areas, estimating risk, or modifying fragile components)
 - spec.md (when working on specific feature)
-- context.md (when designing or implementing from user decisions)
-- design.md (when implementing from design)
-- tasks.md (when executing tasks)
+- context.md (when designing from user decisions)
+- design.md (when creating tasks from design)
+- tasks.md (when reviewing or extending task breakdown)
 
 **Never load simultaneously:**
 
@@ -110,7 +105,7 @@ Plan and implement projects with precision. Granular tasks. Clear dependencies. 
 - Archived documents
 
 **Target:** <40k tokens total context
-**Reserve:** 160k+ tokens for work, reasoning, outputs
+**Reserve:** Remaining context for work, reasoning, outputs
 **Monitoring:** Display status when >40k (see [context-limits.md](references/context-limits.md))
 
 ## Commands
@@ -129,14 +124,14 @@ Plan and implement projects with precision. Granular tasks. Clear dependencies. 
 **Feature-level (auto-sized):**
 | Trigger Pattern | Reference |
 |----------------|-----------|
+| Quick fix, quick task, small change, bug fix | [quick-mode.md](references/quick-mode.md) |
 | Specify feature, define requirements | [specify.md](references/specify.md) |
 | Interview me, ask me about the project, interview mode | [interview.md](references/interview.md) |
 | Discuss feature, capture context, how should this work | [discuss.md](references/discuss.md) |
 | Design feature, architecture | [design.md](references/design.md) |
 | Break into tasks, create tasks | [tasks.md](references/tasks.md) |
-| Implement task, build, execute | [implement.md](references/implement.md) |
-| Validate, verify, test, UAT, walk me through it | [validate.md](references/validate.md) |
-| Quick fix, quick task, small change, bug fix | [quick-mode.md](references/quick-mode.md) |
+
+> **No execute/implement/validate commands.** This skill stops at specification.
 
 ## Skill Integrations
 
@@ -170,10 +165,4 @@ Step 5: Flag as uncertain → "I'm not certain about X — here's my reasoning, 
 
 ## Output Behavior
 
-**Model guidance:** After completing lightweight tasks (validation, state updates, session handoff), naturally mention once that such tasks work well with faster/cheaper models. Track in STATE.md under `Preferences` to avoid repeating. For heavy tasks (brownfield mapping, complex design), briefly note the reasoning requirements before starting.
-
-Be conversational, not robotic. Don't interrupt workflow—add as a natural closing note. Skip if user seems experienced or has already acknowledged the tip.
-
-## Code Analysis
-
-Use available tools with graceful degradation. See [code-analysis.md](references/code-analysis.md).
+After lightweight tasks (state updates, session handoff), mention once that they work well with faster/cheaper models — track in STATE.md `Preferences` to avoid repeating. Be conversational, not robotic.

@@ -26,7 +26,7 @@ Create detailed Product Requirements Documents that are clear, actionable, and s
 
 ## Step 1: Clarifying Questions
 
-Ask only critical questions where the initial prompt is ambiguous. Focus on:
+Ask critical questions where the initial prompt is ambiguous. Focus on:
 
 - **Problem/Goal:** What problem does this solve?
 - **Core Functionality:** What are the key actions?
@@ -49,12 +49,14 @@ Ask at least 5 questions if the prompt is vague. The max is 25 questions, but on
    B. Existing users only
    C. All users
    D. Admin users only
+   E. Other: [please specify]
 
 3. What is the scope?
    A. Minimal viable version
    B. Full-featured implementation
    C. Just the backend/API
    D. Just the UI
+   E. Other: [please specify]
 ```
 
 This lets users respond with "1A, 2C, 3B" for quick iteration. Remember to indent the options.

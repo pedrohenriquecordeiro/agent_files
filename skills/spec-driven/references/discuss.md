@@ -54,7 +54,7 @@ For each selected area:
 
 ### 4. Scope Guardrail (CRITICAL)
 
-The feature boundary from spec.md is **fixed**. Discussion clarifies HOW to implement, never WHETHER to add new capabilities.
+The feature boundary from spec.md is **fixed**. Discussion clarifies HOW to design/specify, never WHETHER to add new capabilities.
 
 **Allowed:** "How should posts be displayed?" (clarifying ambiguity)
 **Not allowed:** "Should we also add comments?" (new capability)
@@ -82,7 +82,7 @@ When user suggests scope creep: "That sounds like a separate feature. I'll note 
 
 ---
 
-## Implementation Decisions
+## Design Decisions
 
 ### [Area 1 that was discussed]
 
@@ -99,7 +99,7 @@ When user suggests scope creep: "That sounds like a separate feature. I'll note 
 
 ### Agent's Discretion
 
-[Areas where user explicitly said "you decide" — agent has flexibility here during design/implementation]
+[Areas where user explicitly said "you decide" — agent has flexibility here during design and tasks phases]
 
 ---
 

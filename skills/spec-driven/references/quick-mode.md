@@ -1,6 +1,8 @@
 # Quick Mode
 
-**Goal:** Execute small, ad-hoc tasks with the same quality principles but without full pipeline ceremony.
+**Goal:** Create a minimal specification for small, ad-hoc tasks without full pipeline ceremony.
+
+> ⛔ **NEVER implement, run, or commit.** Quick mode only produces a TASK.md spec file.
 
 **Trigger:** "Quick fix", "Quick task", "Small change", "Bug fix", "Just do X"
 
@@ -19,55 +21,24 @@
 
 ## Process
 
-### 1. Describe the Task
+### 1. Clarify the Task
+
+Even in quick mode, the agent MUST verify understanding before writing anything. Quick does not mean "skip alignment" — it means "lighter process, same certainty."
 
 User provides a clear, one-sentence description. If vague, ask for specifics:
 
-- ❌ "Fix the login" → Ask: "What's broken? What should happen instead?"
-- ✅ "Fix: login button returns 401 because token refresh skips expired check"
+- "Fix the login" → Ask: "What's broken? What should happen instead?"
+- "Fix: login button returns 401 because token refresh skips expired check" → Clear enough.
 
-### 2. Pre-Implementation Check
+**Minimum verification:** Before writing TASK.md, the agent MUST confirm it can answer: *What exactly is the problem? What does "fixed" look like?* If not, ask.
 
-Before writing code, state:
+### 2. Create TASK.md
 
-```
-Quick Task: [description]
-Files: [list ONLY files to touch]
-Approach: [one sentence]
-Verify: [how to prove it works]
-```
+Create the spec file at `.specs/quick/NNN-slug/TASK.md`.
 
-Get user approval before proceeding. If the pre-implementation check reveals the task is bigger than expected (>3 files, unclear dependencies, design decisions needed), recommend the full pipeline instead.
+If the task turns out bigger than expected (>3 files, unclear dependencies, design decisions needed), recommend the full pipeline instead.
 
-### 3. Implement
-
-Follow [coding-principles.md](coding-principles.md):
-
-- Simplest code that works
-- Touch ONLY listed files
-- No scope creep — fix the thing, nothing else
-
-### 4. Verify
-
-Run verification from step 2. Mark done only after verification passes.
-
-### 5. Commit
-
-Atomic commit following [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/):
-
-```
-<type>(<scope>): <description>
-```
-
-Use imperative mood, lowercase, no period. See [implement.md](implement.md) for full types table.
-
-Examples:
-
-- `fix(auth): prevent 401 on token refresh`
-- `feat(settings): add dark mode toggle`
-- `chore(deps): update eslint to v9`
-
-### 6. Track
+### 3. Track
 
 Update `.specs/project/STATE.md` with quick task record (see state-management.md Quick Tasks section).
 
@@ -81,8 +52,7 @@ Quick tasks live separately from planned features:
 .specs/
 └── quick/
     └── NNN-slug/
-        ├── TASK.md       # Description + verification
-        └── SUMMARY.md    # What was done + commit
+        └── TASK.md       # Description + verification criteria
 ```
 
 **TASK.md template:**
@@ -91,25 +61,25 @@ Quick tasks live separately from planned features:
 # Quick Task NNN: [Title]
 
 **Date:** [date]
-**Status:** Done | In Progress | Blocked
+**Status:** Specification Complete
 
 ## Description
 
 [One sentence: what and why]
 
-## Files Changed
+## Files to Change
 
-- `src/path/to/file.ts` — [what changed]
-- `src/path/to/other.ts` — [what changed]
+- `src/path/to/file.ts` — [what needs to change]
+- `src/path/to/other.ts` — [what needs to change]
 
-## Verification
+## Approach
+
+[One sentence describing how to fix it]
+
+## Verification Criteria
 
 - [ ] [How to verify it works]
 - [ ] [Expected behavior after fix]
-
-## Commit
-
-`[hash]` — [commit message]
 ```
 
 ---
@@ -117,16 +87,14 @@ Quick tasks live separately from planned features:
 ## Guardrails
 
 - **Max 3 files** — If more, use full pipeline
-- **Max 1 hour** — If longer, scope is wrong
 - **No design decisions** — If you're choosing between approaches, use full pipeline
 - **No new dependencies** — Adding packages needs full pipeline review
-- **Track everything** — Even quick tasks get commits and STATE.md entries
+- **Spec only** — Output is always TASK.md, never code
 
 ---
 
 ## Tips
 
-- **Quick ≠ sloppy** — Same coding principles apply, just less ceremony
-- **When in doubt, go full** — Better to over-plan than to ship broken code
+- **Quick ≠ sloppy** — Clear spec prevents implementation mistakes
+- **When in doubt, go full** — Better to over-specify than under-specify
 - **Quick tasks compound** — If you're doing 5+ quick tasks for the same area, it's a feature that needs planning
-- **Verify before marking done** — The whole point is quality, even for small tasks

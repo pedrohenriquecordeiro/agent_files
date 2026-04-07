@@ -2,7 +2,9 @@
 
 **Goal**: Break into GRANULAR, ATOMIC tasks. Clear dependencies. Right tools. Parallel execution plan.
 
-**Skip this phase when:** There are ≤3 obvious steps. In that case, tasks are implicit — go straight to Execute and list them inline in your implementation plan.
+**Skip this phase when:** There are ≤3 obvious steps. In that case, tasks are implicit — list them inline in spec.md.
+
+> ⛔ **NEVER implement, run, or commit.** This phase only produces `tasks.md`.
 
 ## Why Granular Tasks?
 
@@ -22,7 +24,7 @@
 **Benefits of granular:**
 
 - **Agents don't err** - Single focus, no ambiguity
-- **Easy to test** - Each task = one verifiable outcome
+- **Easy to verify** - Each task = one clearly reviewable deliverable
 - **Parallelizable** - Independent tasks run simultaneously
 - **Errors isolated** - One failure doesn't block everything
 
@@ -39,7 +41,7 @@
 
 ### 1. Review Design
 
-Read `.specs/[feature]/design.md` before creating tasks.
+Read `.specs/features/[feature]/design.md` before creating tasks.
 
 ### 2. Break Into Atomic Tasks
 
@@ -56,23 +58,21 @@ What MUST be done before this task can start?
 
 Group tasks into phases. Identify what can run in parallel.
 
-### 5. ASK About MCPs and Skills
+### 5. Note Tools Per Task (Spec Only)
 
-**CRITICAL**: Before execution, ask the user:
+Document which MCPs and Skills would be needed for implementation. Do NOT use them — this is spec-only documentation for the implementer:
 
-> "For each task, which tools should I use?"
->
 > **Available MCPs**: [list from project or user]
 > **Available Skills**: [list from project or user]
 
 ---
 
-## Template: `.specs/[feature]/tasks.md`
+## Template: `.specs/features/[feature]/tasks.md`
 
 ```markdown
 # [Feature] Tasks
 
-**Design**: `.specs/[feature]/design.md`
+**Design**: `.specs/features/[feature]/design.md`
 **Status**: Draft | Approved | In Progress | Done
 
 ---
@@ -190,31 +190,6 @@ T8 → T9
 - [ ] Feature works per acceptance criteria
 - [ ] Integration test passes
 
-**Commit**: `feat([scope]): [description]`
-
----
-
-## Parallel Execution Map
-
-Visual representation of what can run simultaneously:
-
-```
-
-Phase 1 (Sequential):
-  T1 ──→ T2 ──→ T3
-
-Phase 2 (Parallel):
-  T3 complete, then:
-    ├── T4 [P]
-    ├── T5 [P]  } Can run simultaneously
-    └── T6 [P]
-
-Phase 3 (Sequential):
-  T4, T5, T6 complete, then:
-    T7 ──→ T8
-
-```
-
 ---
 
 ## Task Granularity Check
@@ -244,47 +219,5 @@ Before approving tasks, verify they are granular enough:
 - **Dependencies are gates** — Clear what blocks what
 - **Done when = Testable** — If you can't verify it, rewrite it
 - **Requirement ID = Traceable** — Every task traces back to a spec requirement
-- **One commit per task** — Plan the commit message format in advance
+- **One task = one deliverable** — Keep scope tight and traceable
 
----
-
-## Task Verification Standards
-
-Every task MUST include:
-
-**Done when checklist:**
-
-- Specific, testable outcomes
-- Pass/fail criteria
-- Test execution commands
-
-**Verify section:**
-
-- Commands to prove functionality
-- Expected outputs
-- Success indicators
-
-**Structure:**
-
-```markdown
-### T1: [Task name]
-
-**What:** [Deliverable]
-**Where:** [File path]
-
-**Done when:**
-
-- [ ] [Specific outcome]
-- [ ] [Specific outcome]
-- [ ] Tests pass: [command]
-
-**Verify:**
-[Command to prove it works]
-[Expected output/behavior]
-```
-
-**Quality check:**
-
-- Can task be verified without human judgment?
-- Is success criteria binary (pass/fail)?
-- Can verification be automated?
